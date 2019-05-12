@@ -1,3 +1,7 @@
+# 基础学习篇
+
+
+
 * 显示的语言的更改
   * 查看：locale
   * 更改：LANG=en_US.UTF-8  （等号两端没有空格）；export LC_ALL=en_US.UTF-8
