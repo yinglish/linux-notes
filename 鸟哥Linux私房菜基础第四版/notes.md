@@ -30,6 +30,10 @@ BIOS是写死到主板上的一个内存芯片中的程序（ROM），以前是�
 
 显卡相关接口：VGA, DVI, HDMI, DP
 
+磁盘分区：
+
+MBR，磁盘的第一个扇区，记录磁盘的重要信息；新的磁盘分区格式GPT（GUID partition table）
+
 * 显示的语言的更改
   * 查看：locale
   * 更改：LANG=en_US.UTF-8  （等号两端没有空格）；export LC_ALL=en_US.UTF-8
