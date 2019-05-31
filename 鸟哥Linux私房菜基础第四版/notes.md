@@ -58,6 +58,15 @@ MBR分区表格与限制
 
 ## 第四章 首次登录与线上求助
 
+* ctrl + alt + F2 ~ F6: 命令行登录tty2 ~tty6终端机
+* ctrl + alt + F1：图形接口桌面
+
+命令行下：startx  启动窗口界面
+
+指令的下达方式：command [-option] parameter1 parameter2
+* 指令太长时，可以通过\来连续到下一行
+
+
 
 
 * 显示的语言的更改
