@@ -63,12 +63,9 @@ MBR分区表格与限制
 
 命令行下：startx  启动窗口界面
 
-指令的下达方式：command [-option] parameter1 parameter2
+指令的下达方式：command [-option] parameter1 parameter2 ...
 * 指令太长时，可以通过\来连续到下一行
-
-
-
-
+* 选项之前通常会带 - 号，使用完整全名时，会带有 -- 号
 * 显示的语言的更改
   * 查看：locale
   * 更改：LANG=en_US.UTF-8  （等号两端没有空格）；export LC_ALL=en_US.UTF-8
@@ -78,8 +75,9 @@ MBR分区表格与限制
 * 命令补全和文件补全：[tab]键
 * ctrl+c：中断目前的程序；ctrl+d：键盘输入结束/exit
 * 连续两个[tab][tab]的作用：文件查看，命令补全
+* [Shift] + [Page Up]/[Page Down]上下翻页
 * help与man：使用空格键即可完成翻页；输入/word进行关键字搜索（man命令）；以前用过的命令用help查看参数，否则最好通过man进行学习
-* man -f = whatis/man -k = apropos
+* man -f = whatis      man -k = apropos
 * 数据同步到硬盘：sync
 * shutdown [-khrc] [time] [warning]  reboot, halt, poweroff
 * 使用反斜杠`\`是命令连续到下一行
@@ -87,4 +85,139 @@ MBR分区表格与限制
   * 谁在线：`who`
   * 网络的连线状态：`netstat -a`
   * 背景执行的程序：`ps -aux`
-  * 关机相关指令：`shutdown`, `reboot`, `halt`, `poweroff`
+  * 同步数据：`sync`
+  * 关机相关指令：`shutdown`, `reboot`, `halt`, `poweroff`, `systemctl`
+
+## 第五章 Linux的文件权限与目录配置
+
+### 5.1 使用者与群组
+
+* 拥有者、组、其他人
+* /etc/passwd, /etc/shadow, /etc/group
+
+### 5.2 文件权限概念
+
+* [权限][链接][拥有者][群组][文件大小][修改日期][文件名]
+* 权限：
+  * 第一个字符：
+    * d: 目录
+    * -: 文件
+    * l: 链接文件
+    * b: 设备文件中可供存储的周边设备
+    * c: 设备文件中的序列埠设备，如键盘、鼠标
+* 链接：表示有多少文件名链接到此节点
+* 文件夹的权限注意：如果只有读的权限，那么用户不能打开这个文件夹
+* 无论文件权限为何，默认root都可以存取
+* chgrp: 改变文件所属群组 chgrp [-R] 组名  目录名/文件名
+* chown: 改变文件拥有者 chown [-R] 用户名[:组名]  文件或目录
+* chmod: 改变文件的权限，SUID, SGID, SBIT等等特性  
+  * chmod xyz 文件或目录  
+  * chmod u=rwx, go=rx 文件或目录  等号两边无空格
+  * chmod u+x 文件或目录
+* 复制会复制执行者的属性与权限
+* 权限对于文件
+  * r：可读取文件内容
+  * w：可以编辑、新增或者修改文件内容，单不包含删除
+  * x：该文件具有被系统执行的权限
+* 权限对于目录
+  * r：具有读取目录结构清单的权限，如可以用ls显示目录的内容列表
+  * w：具有改动该目录结构清单的权限，即
+    * 创建新的文件与目录
+    * 删除已经存在的文件与目录（不论该文件的权限为何）
+    * 将已存在的文件或目录进行更名
+    * 搬移该目录内的文件、目录位置
+  * x：代表使用者能否进行该目录成为工作目录
+
+### 5.3 Linux目录配置
+
+* usr：unix software resource
+
+## 第六章 Linux文件与目录
+
+### 6.1 目录与路径
+
+* 特殊的目录
+  * .：代表此层目录
+  * ..：代表上层目录
+  * -：代表前一个工作目录
+  * ~：代表“目前使用者身份”所在的主文件夹
+  * ~account：代表account这个使用者的主文件夹
+* 根目录中.和..是同一个目录
+* 目录操作常用命令
+  * cd：变换目录
+  * pwd：显示目前的目录  [-P]显示出真正的路径，而不是链接路径
+  * mkdir：创建一个新的目录 -p：递归创建   -m：设置权限
+  * rmdir：删除一个空的目录 -p：递归创建
+  * 
+
+### 6.2 文件与目录管理
+
+ls常用选项
+* -a：全部的文件，连同隐藏文件
+* -d：仅列出目录本身，不列出目录内的文件数据
+* -l：长数据串行出，包含文件的属性与权限等等
+
+cp [options] source1 source2 source3 ... directory
+* -a: 相当于 -dr --preserve=all
+* -d: 若来源文件为链接文件的属性，则复制链接文件属性而非文件本身
+* -f:
+* -i: 若目标文件存在时，在覆盖时会先询问动作的进行
+* -l:
+* -p: 连同文件的属性一起复制过去
+* -r: 递归持续复制，用于目录的复制行为
+* -s: 复制成为符号链接文件
+* -u:
+* --preserve=all
+* 使用时
+  * 是否需要完整的保留来源文件的信息
+  * 来源文件是否为链接文件
+  * 来源文件是否为特殊的文件，如FIFO, socket
+  * 来源文件是否为目录
+
+rm [-fir] 文件或目录
+* -f: 就是force的意思
+* -i: 互动模式，在删除前会询问
+* -r: 递归删除
+* \rm -r /tmp/etc: 在指令前加反斜杠，可以忽略掉alias的指定选项
+
+mv [options] source1 source2 ... directory
+* -f: fource
+* -i: 交互式
+* -u: 若目标文件已经存在，且source比较新，才会更新
+* 使用mv修改名称
+* 新增命令rename
+
+basename
+
+dirname
+
+### 6.3 文件内容查阅
+
+* cat: 从第一行显示文件内容
+* tac：从最后一行开始显示文件内容
+* nl：显示的时候输出行号
+* more：一页一页的显示
+  * space：向下翻页
+  * Enter：下翻一行
+  * /字串：向下搜寻“字串”
+  * :f : 立刻显示出文件名以及目录
+  * q：代表立刻离开more
+* less：与more类似，可以往前翻页
+* head：只看头几行
+  * head [-n number] 文件
+* tail：只看尾几行
+* od：以二进制的方式读取文件内容
+* 关于文件的三个时间
+  * mtime：modification time, 文件的内容数据改变时
+  * ctime: status time, 文件状态改变时
+  * atime: access time, 文件的内容被取用时
+* touch [-acdmt] 文件
+  * -a: 仅修订access time
+  * -c: 仅修改文件时间，若不存在则不修改
+  * -d: 后面可以接欲修订的时间
+  * -m：仅修改mtime
+  * -t: 
+
+### 6.4 文件与目录的默认权限与隐藏权限
+
+umask/umask -S, 查看默认权限
