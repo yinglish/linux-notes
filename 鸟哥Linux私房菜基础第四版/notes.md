@@ -283,3 +283,7 @@ find [PATH] [option] [action]
 
 ### 7.1 认识Linux文件系统
 
+* superblock, inode, block
+* 索引式文件系统(ext)
+* 链式文件系统(FAT)
+* 目录的保存
