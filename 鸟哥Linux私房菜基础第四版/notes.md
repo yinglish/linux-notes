@@ -2,6 +2,34 @@
 
 ## 第零章 计算机概论
 
+五大组成部分：输入、输出、控制器、逻辑运算单元和内存
+
+CPU架构：
+* 精简指令集：Reduced Instruction Set Computer, RISC
+  * 甲骨文 （Oracle） 公司的 SPARC 系列
+  * IBM 公司的 Power Architecture （包括 PowerPC） 系列
+  * （ARM Holdings） 的 ARM CPU 系列
+* 复杂指令集：Complex Instruction Set Computer, CISC
+  * 主要有AMD、Intel、VIA等的x86架构的CPU（为何成为x86架构：最早的那颗Intel发展出来的CPU代号称为8086）
+
+常用计算单位：
+  * 容量：用二进制
+  * 速度：用十进制
+  * 硬盘厂商标识可能是十进制，系统识别是二进制，导致不一样
+
+常用的个人电脑主板架构（物理结构，以Intel为例）
+  * 北桥：负责链接速度较快的CPU、内存与显卡接口等元件（大多将北桥内存控制器整合到 CPU 封装当中了）
+  * 南桥：负责连接速度较慢的设备接口， 包括硬盘、USB、网卡等等 
+  * CPU:
+  * 显卡：
+  * 网卡：          
+  * 内存
+
+CPU工作频率：
+  * 外频
+  * 倍频
+  * 超频：现在的CPU可以根据使用情况自动进行频率变动
+
 系统参数（如网卡、显卡是否启动）记录在主板上CMOS芯片上，需要有电（故有电源）
 
 BIOS是写死到主板上的一个内存芯片中的程序（ROM），以前是不可更改，但是现在通常是写入类似闪存或EEPROM中。
