@@ -62,12 +62,13 @@ BIOS是写死到主板上的一个内存芯片中的程序（ROM），以前是�
 显卡相关接口：VGA, DVI, HDMI, DP
 
 磁盘分区：
+* 磁盘的第一个扇区，记录磁盘的重要信息（MBR方式）；
+  * MBR (Master Boot Record, MBR): 可以安装开机管理程序的地方，有446 Bytes
+  * 分区表 (partition table)：记录整颗硬盘分区的状态，有64Bytes，所以只能记录四个分区(Primary分区或Extended分区，Extended最多只能有一个，但可以利用延伸分区继续分下去，即逻辑分区)
+* GPT(GUID partition table): 新的磁盘分区格式
+  * 磁盘扇区不再仅仅是512Bytes，可高达4K，使用逻辑区块位址(Logical Block Address, LBA)，默认是512B，使用34个LBA记录分区信息，磁盘最后也有33个用作备份。
+  * LBA0: MBR相容区块，与MBR类似，只不过分区表的位置仅放入了一个特殊的标志
 
-MBR，磁盘的第一个扇区，记录磁盘的重要信息；新的磁盘分区格式GPT（GUID partition table）
-
-MBR分区表格与限制
-* 主要开机记录区（Master Boot Record, MBR）：可以安装开机管理程序的地方，有446 Bytes
-* 分区表(partition table)：记录整颗硬盘分区的状态，有64Bytes，所以只能记录四个分区(Primary分区或Extended分区，Extended最多只能有一个，但可以利用延伸分区继续分下去，即逻辑分区)
 
 ### BIOS与UEFI开机检测程序
 
@@ -79,11 +80,13 @@ MBR分区表格与限制
         * 提供菜单：使用者可以选择不同的开机项目
         * 载入核心文件：直接指向真正可开机的程序区段来开始操作系统
         * 转交其他loader：将开机管理功能转交给其他的loader负责
+        * 开机管理程序既可以安装在MBR区，也可以安装在每个分区的boot sector
     * 核心文件：开始操作系统的功能
     * 说明：BIOS也能够从GPT格式的LBA0的与MBR相容区块读取第一阶段的开机管理程序码，如果开机管理程序能够认识GPT的话，那么也可以开机成功，否则开机失败
 
 * UEFI BIOS 搭配GPT开机的流程
-    * 也称UEFI为UEFI BIOS
+  * UEFI 主要是想要取代 BIOS 这个固件界面
+  * 也称UEFI为UEFI BIOS
 
 ## 第三章 安装CentOS7.x
 
@@ -108,7 +111,7 @@ MBR分区表格与限制
 * 连续两个[tab][tab]的作用：文件查看，命令补全
 * [Shift] + [Page Up]/[Page Down]上下翻页
 * help与man：使用空格键即可完成翻页；输入/word进行关键字搜索（man命令）；以前用过的命令用help查看参数，否则最好通过man进行学习
-* man -f = whatis      man -k = apropos
+* man -f [指令名] = whatis [指令名]      man -k [man文档中包含的名称] = apropos [man文档中包含的名称]
 * 数据同步到硬盘：sync
 * shutdown [-khrc] [time] [warning]  reboot, halt, poweroff
 * 使用反斜杠`\`是命令连续到下一行
