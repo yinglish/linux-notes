@@ -416,6 +416,45 @@ find [PATH] [option] [action]
 * bzip2 [-cdkzv#] 文件名; bzcat 文件名.bz2
 * xz [-dtlkc#] 文件名; xcat 文件名.xz
 
+### 8.3 打包指令
+
+* 打包与压缩：tar [-z|-j|-J] [cv] [-f 待创建的新文件名] filename...
+  * tar -zcv -f etc.tar.gz /etc
+* 查看文件名：tar [-z|-j|-J] [tv] [-f 既有的tar文件名] 
+* 解压缩：tar [-z|-j|-J] [xv] [-f 既有的tar文件名] [-C 目录]
+  * tar -zxv -f etc.tar.gz -C /tmp
+* 仅解开单一文件：tar -jxv -f *.tar.bz2 待解开文件名
+* 打包某目录，但不包含某文件：tar -jcv -f /root/system.tar.bz2 --exclude=/root/etc* --exclude=/root/system.tar.bz2 /etc /root
+
+### 8.4 XFS文件系统备份
+
+CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个工具实现
+
+### 8.5 光盘写入工具
+
+* mkisofs：创建镜像文件
+* cdrecord：光盘烧录工具
+
+### 8.6 其他常见的压缩与备份工具
+
+* dd if="input_file" of="output_file" bs="block_size" count="number"
+* cpio：
+
+## 第九章 vim程序编辑器
+
+### 9.1 vi与vim
+
+### 9.2 vi的使用
+
+* 一般指令模式
+  * 以vi打开文件后的默认模式，可以移动光标、删除字符或删除整行，也可以复制、粘贴
+* 编辑模式
+  * 在一般指令模式中是，通过“i, I, o, O, a, A, r, R”进入编译模式，“ESC”退出编辑模式
+* 命令行模式
+  * 在一般指令模式中输入“: / ?”任意一个进入命令行模式
+
+
+
 
 
 
