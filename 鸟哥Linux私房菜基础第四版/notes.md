@@ -462,12 +462,23 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
 
 ### 10.1 认识BASH这个Shell
 
-
-
-
-
-
-
+* 只要能够操作应用程序的接口都能够称之为shell
+* 系统合法的shell与/etc/shells
+* bash的优点
+  * 命令编辑能力(history)
+  * 命令与文件补全功能（tab）
+  * 命令别名设置功能(alias)
+  * 工作控制、前景背景控制(job control, foreground, background)
+  * 程序化脚本
+  * 通用字符(Wildcard)
+  * 
+* type [-tpa] name
+  * -t:
+    * file: 表示为外部指令
+    * alias: 
+    * buildin
+  * -p:
+  * -a:
 
 
 
