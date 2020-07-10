@@ -500,5 +500,5 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
     * 导出变量为环境变量："export PATH"
     * 取消变量：unset 变量名
 
-    
+
 
