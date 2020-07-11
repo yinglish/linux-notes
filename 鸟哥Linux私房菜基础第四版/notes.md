@@ -483,7 +483,7 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
 * ctrl + u/ ctrl + k：分别是从光标处向前删除指令串及向后删除指令串
 * ctrl + a/ ctrl + e: 分别是让光标移动到整个指令串的最前面或最后面
 
-### 10.1 Shell的变量功能
+### 10.2 Shell的变量功能
 
 * 变量的取用与设置
   * echo：echo $variable, 如echo $PATH
@@ -499,6 +499,9 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
     * 扩增变量内容时，可用"$变量名称"或"${变量}"累加内容，如："PATH=$PATH:/home/bin"，或"PATH=${PATH}:/home/bin"，或'PATH="${PATH}:/home/bin'
     * 导出变量为环境变量："export PATH"
     * 取消变量：unset 变量名
-
-
+* env: 查看环境变量
+  * HOME:
+  * SHELL
+  * HISTSIZE
+  *  
 
