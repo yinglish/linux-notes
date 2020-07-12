@@ -217,12 +217,14 @@ cp [options] source1 source2 source3 ... directory
   * 来源文件是否为目录
 
 rm [-fir] 文件或目录
+
 * -f: 就是force的意思
 * -i: 互动模式，在删除前会询问
 * -r: 递归删除
 * \rm -r /tmp/etc: 在指令前加反斜杠，可以忽略掉alias的指定选项
 
 mv [options] source1 source2 ... directory
+
 * -f: fource
 * -i: 交互式
 * -u: 若目标文件已经存在，且source比较新，才会更新
@@ -263,11 +265,13 @@ dirname
 ### 6.4 文件与目录的默认权限与隐藏权限
 
 umask/umask -S, 查看默认权限，数字显示的是被拿掉的权限，但文件默认都没有执行权限
+
 * 例如如果umask是002，则(root用户默认的umask拿掉的权限较多，默认值是0022)
   * 创建文件时：(-rw-rw-rw-) - (-----w--w-) ==> -rw-r-r-
   * 创建目录时：(drwxrwxrwx) - (d----w--w-) ==> drwxr-xr-x
 
 设置文件隐藏属性 chattr [+-=] [ASacdistu] 文件或目录名称
+
 * +: 增加一个特殊参数，其余参数不变
 * -: 减去一个特殊参数，其余原本参数不变
 * =: 设置一定，且仅有后面接的参数
@@ -503,5 +507,17 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
   * HOME:
   * SHELL
   * HISTSIZE
-  *  
-
+  * MALL
+  * PATH
+  * LANG
+  * RANDOM
+* set：查看所有变量，包括环境变量和bash中的变量
+* export：将自定义变量转化为环境变量
+* read [-pt] variable：从用户输入设置变量内容
+* declare/type [-aixr] variable：声明一个变量
+* array：读取方式$var[index]
+* ulimit
+* 删除变量内容
+  * ${variable#/*local/bin:}等
+* 取代变量内容
+  * ${variable/old/new}
