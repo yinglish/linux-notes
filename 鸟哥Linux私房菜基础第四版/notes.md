@@ -521,3 +521,119 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
   * ${variable#/*local/bin:}等
 * 取代变量内容
   * ${variable/old/new}
+
+### 10.3 命令别名与历史命令
+
+* alias: alias lm='ls -al | more'
+* unalias
+* history 
+  * history n：显示最近n个记录
+  * history -c：将目前shell中的所有history删除
+  * ...
+  * !number：执行第几条命令
+  * !command：搜索command开头的指令并执行
+  * !!：执行上一个命令
+
+### 10.4 Bash Shell的操作环境
+
+* 一般的指令执行顺序
+  * 以相对/绝对路径执行指令
+  * 由alias找到该指令执行
+  * 由bash内置的builtin指令执行
+  * 通过$PATH这个变量的顺序搜寻到的指令执行
+* type -a [command]：查看命令的执行顺序
+* bash的环境变量配置文件
+  * login shell: 打开终端进行登录流程后的shell，/etc/profile ~/.bash_profile ~/.bash_login  ~/.profile
+    * source 配置文件或文件名：读取文件，使得配置生效
+  * non-login shell：不需要登录流程获取的shell（如在shell中再开的子shell）
+    * ~/.bashrc
+  * bash默认组合键
+    * ctrl + c: 终止目前的命令
+    * ctrl + d: 输入结束（EOF）
+    * ctrl + m: enter
+    * ctrl + s: 暂停屏幕输入
+    * ctrl + q: 恢复屏幕输入
+    * ctrl + u: 删除整列命令
+    * ctrl + z: “暂停”目前命令
+  
+### 10.5 数据流重导向
+
+* 1>  >
+* 1>> >>
+* 2> > 
+* 2>> >>
+* /dev/null重定向至此的数据会被删掉
+* 标准与错误均重定向到一个文件：find /home -name .bashrc > list 2>&1
+* 命令执行的判断依据
+  * cmd; cmd：不考虑指令相关性的连续指令下达
+  * cmd1 && cmd2：若cmd1执行完毕且正确($?=0)则开始执行cmd2
+  * cmd1 || cmd2：若cmd1执行完毕且正确($?=0)则cmd2不执行
+  * 逻辑判断：cmd1 && cmd2 || cmd3
+
+### 10.5 管线命令(pipe)
+
+* 管线命令：能够接受standard input的数据的命令
+* 管线命令仅会处理stard output，忽略standard error output
+* cut：按行处理信息
+  * cut -d '分隔字符' -f fields
+  * cut -c 字符区间
+* grep：按行处理信息
+  * grep [-acinv] [--color=auto] '搜索字符串' 文件名称
+* 排序命令
+  * sort [-fbMnrtuk] [file or stdin]
+    * cat /etc/passwd | cat -t ':' -k 3 (-n)
+  * uniq [-ic]
+    * last | cut -d ' ' -f 1 | sort | uniq -c
+  * wc [-lwn]
+* 双重导向：tee
+  * tee [-a] file
+    * last | tee last.list | cut -d ' ' -f1
+* 字符转换命令
+  * tr [-ds] SET1
+    * last | tr '[a-z]' '[A-Z]'
+  * col [-xb]
+  * join [-ti12] file1 file2
+    * join -t ':' -1 4 /etc/passwd -2 3 /etc/group | head -n 3
+  * paste [-d] file1 file2
+    * paste /etc/passwd /etc/shadow
+  * expand：将[tab]键转换为空格：expand [-t] file
+* split
+  * split [-bl] file PREFIX
+  * cd /tmp; split -b 300k /etc/services services
+  * cat services* >> servicesbak
+  * ls -al / | split -l 10 - lsroot
+* xargs：参数替换  xargs [-0epn] command
+* -的用途
+  * mkdir /tmp/homeback
+  * tar -cvf - /home | tar -xvf - -C /tmp/homeback
+
+## 第十一章 正则表达式与文件格式化处理
+
+### 11.2 基础正则表达式
+
+* 特殊符号与含义
+  * [:alnum:]：代表英文大小写字符及数字，亦即 0-9, A-Z, a-z
+  * [:alpha:]：代表任何英文大小写字符，亦即 A-Z, a-z
+  * [:blank:]：代表空白键与 [Tab] 按键两者
+  * [:cntrl:]：代表键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等
+  * [:digit:]：代表数字而已，亦即 0-9
+  * [:graph:]：除了空白字符 （空白键与 [Tab] 按键） 外的其他所有按键
+  * [:lower:]：代表小写字符，亦即 a-z
+  * [:print:]：代表任何可以被打印出来的字符
+  * [:punct:]：代表标点符号 （punctuation symbol），亦即：" ' ? ! ; : # $...
+  * [:upper:]：代表标点符号 （punctuation symbol），亦即：" ' ? ! ; : # $...
+  * [:space:]：代表标点符号 （punctuation symbol），亦即：" ' ? ! ; : # $...
+  * [:xdigit:]：代表 16 进位的数字类型，因此包括： 0-9, A-F, a-f 的数字与字符
+* grep [-A] [-B] [--color=auto] '搜索字符串' filename
+
+|RE字符|意义与范例|
+|-|-|
+|^word|意义：待搜寻的字串（word）在行首！ grep -n '^#' regular_express.txt|
+|word$|意义：待搜寻的字串（word）在行尾！ grep -n '!$' regular_express.txt
+|.|意义：代表“一定有一个任意字符”的字符！
+|\\|意义：跳脱字符，将特殊符号的特殊意义去除！
+|*|意义：重复零个到无穷多个的前一个 RE 字符
+[list]|意义：字符集合的 RE 字符，里面列出想要撷取的字符！
+[n1-n2]|意义：字符集合的 RE 字符，里面列出想要撷取的字符范围！
+[^list]|意义：字符集合的 RE 字符，里面列出不要的字串或范围！
+\{n,m\}|意义：连续 n 到 m 个的“前一个 RE 字符”意义：若为 \{n\} 则是连续 n 个的前一个 RE 字符，
