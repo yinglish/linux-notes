@@ -652,3 +652,70 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
   * nl /etc/passed | sed '2,5c No 2-5 number'
   * cat /etc/man_db.conf | grep 'MAN' | sed 's/#.*$//g'
   * sed -i 's/\.$/\!/g' file.txt
+
+### 11.3 延伸正则表达式
+
+* egrep/ grep -E
+
+RE字符|意义
+-|-
++|意义：重复“一个或一个以上”的前一个 RE 字符
+?|意义：“零个或一个”的前一个 RE 字符
+\||意义：用或（ or ）的方式找出数个字串
+()|意义：找出“群组”字串
+()+|意义：多个重复群组的判别
+
+### 11.4 文件格式化与相关处理
+
+* printf
+* awk：数据处理工具，比较倾向于一行当中分成数个“字
+段”来处理
+  * awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
+  * awk的内置变量(引用时不需要在前面加$)
+    * NF: 每一行 （$0） 拥有的字段总数
+    * NR: 目前 awk 所处理的是“第几行”数据
+    * FS: 目前的分隔字符，默认是空白键
+  * awk的逻辑运算字符
+    * >
+    * <
+    * \>=
+    * <=
+    * ==
+    * ！=
+  * cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t" $3}'
+  * cat pay.txt | \
+  \> awk 'NR==1{printf "%10s %10s %10s %10s %10s\n",$1,$2,$3,$4,"Total" }
+  \> NR>=2{total = $2 + $3 + $4
+  \> printf "%10s %10d %10d %10d %10.2f\n", $1, $2, $3, $4, total}'
+    * 在 {} 内的动作，如果有需要多个指令辅助时，可利用分号“;”间隔，或者直接以
+[Enter] 按键来隔开每个指令
+    * 与 bash shell 的变量不同，在 awk 当中，变量可以直接使用，不需加上 $ 符号
+* diff [-bBi] from-file to-file
+  * 以行为单位
+  * 一般是用在 ASCII 纯文本文件
+  * 通常是用在同一的文件（或软件）的新旧版本差异上
+* cmp [-l] file1 file2
+  * 主要利用“字节”单位去比对
+* patch 
+  * diff -Naur passwd.old passwd.new > passwd.patch
+  * patch -p0 < passwd.patch
+  * patch -R -p0 < passwd.patch
+* pr
+
+## 第十二章 学习Shell Scripts
+
+### 12.1 什么是Shell Scripts
+
+* shell script:
+  * 指令的执行是从上而下、从左而右的分析与执行
+  * 指令、选项与参数间的多个空白都会被忽略掉
+  * 空白行也将被忽略掉，并且 [tab] 按键所推开的空白同样视为空白键
+  *  如果读取到一个 Enter 符号 （CR） ，就尝试开始执行该行 （或该串） 命令
+  * 至于如果一行的内容太多，则可以使用“ \[Enter] ”来延伸至下一行
+  * “ # ”可做为注解！任何加在 # 后面的数据将全部被视为注解文字而被忽略
+* shell script的执行方式：
+  * 直接指令下达
+  * 以 bash 程序来执行
+
+### 12.2 简单shell练习
+
