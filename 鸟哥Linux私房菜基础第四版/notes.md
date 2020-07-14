@@ -637,3 +637,18 @@ CentOS默认是XFS文件系统，其备份可以通过xfsdump和xfsrestore两个
 [n1-n2]|意义：字符集合的 RE 字符，里面列出想要撷取的字符范围！
 [^list]|意义：字符集合的 RE 字符，里面列出不要的字串或范围！
 \{n,m\}|意义：连续 n 到 m 个的“前一个 RE 字符”意义：若为 \{n\} 则是连续 n 个的前一个 RE 字符，
+
+* sed [-nefr] [动作]
+  * 动作说明：[n1, [n2]]function
+    * a: 新增
+    * c: 取代
+    * d: 删除
+    * i: 插入
+    * p: 打印
+    * s: 取代
+  * nl /etc/passwd | sed '2,5d'
+  * nl /etc/passwd | sed '2a Drink tea or ...\
+  drink tea
+  * nl /etc/passed | sed '2,5c No 2-5 number'
+  * cat /etc/man_db.conf | grep 'MAN' | sed 's/#.*$//g'
+  * sed -i 's/\.$/\!/g' file.txt
