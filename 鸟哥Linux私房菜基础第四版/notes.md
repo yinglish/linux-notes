@@ -714,8 +714,66 @@ RE字符|意义
   * 至于如果一行的内容太多，则可以使用“ \[Enter] ”来延伸至下一行
   * “ # ”可做为注解！任何加在 # 后面的数据将全部被视为注解文字而被忽略
 * shell script的执行方式：
-  * 直接指令下达
-  * 以 bash 程序来执行
+  * 直接指令下达（文件需要具备可执行权限）
+  * 以bash程序来执行（如：sh demo.sh）
+* shell script文件说明
+  * 第1行：#!/bin/bash
+  * 添加注释说明程序功能
+  * 添加注释作为更改记录
+  * 设置环境变量并导出，如PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin  （下一行）export PATH
+  * 程序返回值，如 exit 0
 
 ### 12.2 简单shell练习
 
+* read指令使用：read -p "demo" variable
+* echo -e的作用
+* 推荐方式：var=$((运算内容))
+* script执行方式的差异
+  * 直接执行脚本（通过路径，或bash）：使用一个新的bash执行，执行换后会退出，各项变量或动作不会传回到父程序中
+  * source 脚本：在父程序中执行，故变量还在
+
+### 12.3 善用判断式
+
+* test指令: test -f ${filename} && filetype="regular file"
+  * test常用标志与意义
+* 判断符号[]：[ -z "${HOME}" ] ; echo $?
+  * 中括号内的内容用空格隔开
+  * 括号内的变量最好用双引号、
+  * 常数用单引号或双引号
+* 默认变量：
+  * $0: /path/to/scriptname 
+  * $1: opt1
+  * $2: opt2
+  * $3: opt3
+  * $#：输入参数的个数
+  * $@: 代表所有的参数,""$1", "$2", ..."
+  * $*: 代表""$1"c"$2"c..."
+  * shift命令
+
+
+### 12.4 条件判断式
+
+if [条件判断式]; then
+  当条件判断式成立时，执行
+elif [...]; then
+  ...
+fi
+
+
+case $变量名称 in
+  "第一个变量内容")
+  程序段
+  ;;
+  "第二个变量内容")
+  程序段
+  ;;
+  *)
+  程序段
+  exit 1
+  ;;
+esac
+
+
+function fname() {
+  程序段
+}
