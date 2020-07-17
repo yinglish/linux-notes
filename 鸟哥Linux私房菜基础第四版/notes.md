@@ -777,3 +777,26 @@ esac
 function fname() {
   程序段
 }
+
+### 12.5 循环
+
+while [ condition ]
+do
+ 程序段
+done
+
+until [ condition ]
+do 
+  程序段
+done
+
+for var in con1 con2 con3 ...
+do 
+  程序段
+done
+
+for ((初始值; 限制值; 执行步阶))
+do
+  程序段
+done
+
