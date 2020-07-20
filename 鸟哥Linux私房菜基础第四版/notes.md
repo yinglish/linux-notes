@@ -800,3 +800,32 @@ do
   程序段
 done
 
+### 12.6 shell script的追踪与debug
+
+sh [-nvx] scripts.sh
+* -n: 不要执行script，仅查询语法的问题
+* -v：再执行script前，先将scripts的内容输出到屏幕上
+* -x：将使用到的script内容显示到屏幕上
+
+## 第十二章 Linux账号管理与ACL权限设置
+
+### 13.1 Linux账号与群组
+
+使用者识别码：UID  GID
+* /etc/passwd  /etc/group文件中有记录，与账号对应，实际计算机是以UID与GID区分的
+* id 账号名   查看账号对应的使用者识别码信息
+
+/etc/passwd文件结构
+* 一行代表一个账号
+* 有很多诸如bin之类的系统账号，不要动
+* 账号名称:密码(x):UID:GID:使用者信息说明:主文件夹:Shell
+
+/etc/shodow文件结构
+* 账号名称:密码:最近更改密码时间:密码不可更改时长:密码需要重新变更的时长:密码需要变更前多久提醒:密码过期后的宽限时间:账号失效日期:保留
+
+修改密码
+* root用户通过passwd修改一般用户密码
+* root密码的修改
+
+查询密码的hash算法：authconfig --test | grep hashing
+
