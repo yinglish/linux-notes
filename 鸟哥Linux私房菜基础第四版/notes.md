@@ -829,3 +829,16 @@ sh [-nvx] scripts.sh
 
 查询密码的hash算法：authconfig --test | grep hashing
 
+群组相关：
+
+* /etc/group:  群组名称:群组密码:GID:此群组支持的账号名称
+* groups: 查看支持的群组与有效群组
+* newgrp: 有效群组的切换
+* root用户通过usermod将其他用户加入群组
+* 群组管理员  /etc/gshadow   群组名称:密码栏:群组管理员账号:该群组支持的所属账号
+
+### 13.2 账号管理
+
+新增与移除用户
+
+* useradd [-u UID] [-g 初始群组] [-G 次要群组] [-mM] [-c 说明栏] [-d 主文件夹绝对路径] [-s shell] 使用者账号名
