@@ -842,3 +842,18 @@ sh [-nvx] scripts.sh
 新增与移除用户
 
 * useradd [-u UID] [-g 初始群组] [-G 次要群组] [-mM] [-c 说明栏] [-d 主文件夹绝对路径] [-s shell] 使用者账号名
+* passwd [--stdin] [账号名称]
+* chage [-ldEImMW] [账号名]   (密码参数显示功能)
+* usermod [-cdegGlsuLU] [username]  (调整用户信息)
+* userdel [-r] [username]
+* id
+* chsh [ls]
+
+新增与移除群组
+
+* groupadd [-g gid] [-r] 群组名称
+* groupmod [-g gid] [-n group_name] 群组名
+* groupdel [groupname]
+* gpasswd groupname
+
+### 13.2 主机的细部权限规划：ACL的使用
