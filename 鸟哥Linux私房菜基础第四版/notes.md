@@ -856,4 +856,27 @@ sh [-nvx] scripts.sh
 * groupdel [groupname]
 * gpasswd groupname
 
-### 13.2 主机的细部权限规划：ACL的使用
+### 13.3 主机的细部权限规划：ACL的使用
+
+ACL：Access Control List
+
+提供针对传统owner, group, others的read, write, execute的权限之外的更细致的权限控制，可针对单一使用者，单一文件或目录来进行r, w, x的权限规范
+
+* 使用者：可以针对使用者来设置权限
+* 群组：针对群组为对象来设置权限
+* 默认属性：还可以针对在该项目下创建新文件/目录时，规范新数据的默认权限
+
+* setfacl -[-bkRd] [{-m|-x} acl参数] 目标文件名
+  * 指定用户权限设置：seftacl -m u:vbird1:rx acl_test1
+  * 单一群组设置：seftacl -m g:mygroup1:rx acl_test1
+  * 有效权限设置：setfacl -m m:r acl_test1  (针对mask的设置)
+  * 设置ACL权限继承：setfacl -m d:u:myuser1:rx 目录名
+* getfacl filename
+
+### 13.4 使用者身份切换
+
+* su [-lm] [-c 指令] [username]
+* sudo [-b] [-u 新使用者账号]
+* 使用visudo修改/etc/sudoers文件给其他用户添加sudo权限
+  * vbird1 ALL=(ALL) ALL  (使用者账号  登录者的来源主机=(可切换的身份) 可下达的指令)
+  * 设置免密使用sudo：vbird1 ALL=(ALL)  NOPASSWD: ALL
