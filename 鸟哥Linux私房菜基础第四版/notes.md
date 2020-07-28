@@ -856,7 +856,7 @@ sh [-nvx] scripts.sh
 * groupdel [groupname]
 * gpasswd groupname
 
-### 13.3 主机的细部权限规划：ACL的使用
+### 13.3 主机的精细权限规划：ACL的使用
 
 ACL：Access Control List
 
@@ -880,3 +880,22 @@ ACL：Access Control List
 * 使用visudo修改/etc/sudoers文件给其他用户添加sudo权限
   * vbird1 ALL=(ALL) ALL  (使用者账号  登录者的来源主机=(可切换的身份) 可下达的指令)
   * 设置免密使用sudo：vbird1 ALL=(ALL)  NOPASSWD: ALL
+
+### 13.5 使用者的特殊shell与PAM模块
+
+有些账号是不能通过shell或bash进行登录的，如系统账号，在/etc/passwd文件中，其登录时的shell项为/sbin/nologin
+
+linux中账号的权限管理是由PAM模块提供的，可自行调用该接口完成一些功能
+
+### 13.6 Linux主机上的使用者信息传递
+
+查询使用者：w, who, last, lastlog
+
+与使用者对谈：write, mesg, wall, mail
+
+### 13.7 CentOS环境下大量创建账号的方法
+
+账号相关的检查工具：pwck, pwconv, pwunconv, chpasswd
+
+批量创建账号的例子
+
