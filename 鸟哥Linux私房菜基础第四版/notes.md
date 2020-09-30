@@ -1078,3 +1078,103 @@ at的使用
   * Swap: 使用率最后不要超过20%
 * uname: 查看系统与核心相关信息
 * uptime：观察系统启动时间与工作负载
+* netstat：netstat -[atunlp]
+  * 常用选项：netstat -tulnp 列出监听网络的接口与状态
+* dmesg：分析核心产生的信息
+* vmstat：侦测系统资源变化
+
+### 16.4 特殊文件与程序
+
+#### 16.4.1 具有SUID/SGID权限的指令执行状态
+
+* SUID仅对二进制程序有效
+* 执行者对于该程序需要具有x的可执行权限
+* 本权限仅在执行该程序的过程中有效
+* 执行者将具有该程序拥有者的权限
+
+#### 16.4.2 /proc/*的意义
+
+内存中的数据都是写入到/proc目录下的
+
+#### 16.4.3 查询已打开的文件或执行中的程序打开的文件
+
+* fuser：了解某个文件（或文件系统）目前正在被哪些程序所使用
+* lsof：列出被程序打开的文件
+* pidof：找出正在执行的程序的PID
+
+### 16.5 SELinux初探
+
+CentOS 5.x之后的版本
+
+#### 16.5.1 什么是SELinux
+
+Security Enhanced Linux
+
+设计目标：避免资源被误用
+
+传统文件权限与账号关系：自主式存取控制，DAC
+* 依据程序的拥有者与文件资源的rwx权限来决定有无存取的能力
+  * root具有最高的权限
+  * 使用者可以取得程序来变更文件资源的存取权限
+
+委任式存取控制，MAC：针对特定的程序与特定的文件资源来进行权限的管控。控制的“主体”是程序而不是使用者、
+
+#### 16.5.2 SELinux的运行模式
+
+* 主体（Subject）：SELinux管理的是程序
+* 目标（Object）：主体能否存取的“目标资源”
+* 策略（Policy）：
+  * targeted：针对网络服务限制较多
+  * minimum：有target修订而来，仅针对选择的程序来保护
+  * mls：完成的SELinux限制
+* 安全性文本（security context）
+  * 安全性文本存储于inode中，使用ls -Z可以查看，含义：Identify:role:type
+    * Identify: 
+      * unconfined_u:不受限用户
+      * system_u: 系统用户
+    * Role：通过该字段可以知道数据是属于程序、文件资源还是使用者
+      * object_r: 代表的是文件或目录等文件资源
+      * system_r: 代表的是程序
+    * Type：
+
+#### 16.5.3 SELinux三种模式的启动、关闭与观察
+
+* enforcing
+* permissive
+* disabled
+* SELinux的启动与关机
+
+* 余下内容省略（看一下即可）
+
+## 第十七章 认识系统服务（daemons）
+
+### 17.1 什么是daemon与服务
+
+daemon是提供某种服务而运行的程序，可以将daemon视同服务等价
+
+#### 17.1.1 System V开机启动服务流程（已弃用）
+
+#### 17.1.2 systemd使用的unit分类
+
+* 平行处理所有的服务，加速开机流程
+* 已经要求就回应的on-demand启动方式
+* 服务相依赖性检查
+* 依daemon功能分类
+* 将多个daemons集合成为一个群组
+* 向下相容就有的init服务脚本
+
+systemd的配置文件放置目录
+
+### 17.2 通过systemctl管理服务
+
+#### 17.2.1 通过systemctl管理单一服务(service unit)的启动/开机与观察状态
+
+systemctl [command] [unit]
+
+* command: start, stop, restart, reload, enable, disable, status, is-active, is-enable, mask, unmask
+
+#### 17.2.2 通过systemctl观察系统上所有的服务
+
+systemctl [command] [--type=TYPE] [--all]
+* command: list-units, list-unit-files
+* type: service, socket, target
