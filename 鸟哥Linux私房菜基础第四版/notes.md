@@ -1178,3 +1178,47 @@ systemctl [command] [unit]
 systemctl [command] [--type=TYPE] [--all]
 * command: list-units, list-unit-files
 * type: service, socket, target
+
+#### 17.2.3 通过systemctl管理不同的操作环境
+
+systemctl list-units --type=target --all
+
+systemclt [command] [unit.target]
+* command:
+  * get-default: 获取当前target
+  * set-default: 设置后面的target的默认的操作模式
+  * isolate: 切换到后面接的target
+
+* 简单指令
+  * systemctl poweroff 系统关机
+  * systemctl reboot 重新开机
+  * systemctl suspend 进入暂停模式（系统状态数据保存到内存中，然后关闭大部分的系统硬件）
+  * systemctl hibernate 进入休眠模式 （系统状态保存到硬盘中，然后关机）
+  * systemctl rescue 强制进行救援模式
+  * systemctl emergency 强制进入紧急求援模式
+
+#### 17.2.4 通过systemctl分析服务之间的依赖性
+
+systemctl list-dependencies [unit] [--reverse]
+
+### 17.3 systemctl针对service类型的配置文件
+
+#### 17.3.1 systemctl配置文件相关目录简介
+
+systemd的配置文件大部分放置在/usr/lib/systemd/system/目录内，但是官方不建议在此处修改
+例如：
+* /usr/lib/systemd/system/vsftpd.service：官方默认的配置文件
+* /etc/systemd/system/vsftpd.service.d/custom.conf：在此处修改的内容会自动追加至其他设置
+* /etc/systemd/system/vsftpd.service.wants：链接文件，启动了vsftpd.service之后，最好加上这个目录下的服务
+* /etc/systemd/system/vsftpd.service.requires：链接文件，启动vsftpd.service之前，需要启动的服务
+
+#### 17.3.2 配置文件简介
+
+#### 17.3.3 配置两个vsftpd运行的实例
+
+#### 17.3.4 创建自己的服务
+
+### 17.4 systemctl针对timer的配置文件
+
+### 17.5 CentOS 7.x默认启动的服务简易说明
+
